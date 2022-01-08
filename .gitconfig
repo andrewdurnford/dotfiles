@@ -1,0 +1,40 @@
+[user]
+	name = Andrew Durnford
+	email = andrewdurnford3@gmail.com
+
+[core]
+	editor = vim
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = false
+
+[diff]
+	colorMoved = zebra
+
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+	showbranch = auto
+	ui = true
+
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	old = red bold
+	new = green bold
+
+[color "status"]
+	added = green bold
+	changed = yellow bold
+	untracked = red
+[pager]
+	branch = false
