@@ -23,3 +23,6 @@ ln -s $HOME/code/andrewdurnford/dotfiles/.zshrc $HOME/.zshrc
 # Add .gitconfig with symlink to dotfiles
 rm -rf $HOME/.gitconfig
 ln -s $HOME/code/andrewdurnford/dotfiles/.gitconfig $HOME/.gitconfig
+
+# Set macOS preferences
+source .macos
