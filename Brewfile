@@ -1,5 +1,6 @@
 # Taps
 tap 'homebrew/cask'
+tap 'homebrew/cask-fonts'
 
 # Binaries
 brew 'curl'
@@ -14,6 +15,8 @@ brew 'zsh'
 # Applications
 cask 'bitwarden'
 cask 'docker'
+cask 'font-fira-code'
+cask 'iterm2'
 cask 'logitech-options'
 cask 'messenger'
 cask 'slack'
