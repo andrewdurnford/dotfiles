@@ -67,6 +67,8 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
+alias vim="nvim"
+
 # curl
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 
@@ -77,3 +79,6 @@ eval $(/opt/homebrew/bin/brew shellenv)
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+# tmux script
+bindkey -s ^f "tmux-sessionizer\n"

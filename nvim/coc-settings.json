@@ -1,0 +1,17 @@
+{
+  // coc-eslint
+  "eslint.alwaysShowStatus": true,
+  // coc-highlight
+  "colors.filetypes": ["*"],
+  "highlight.colors.enable": true,
+  "highlight.colorNames.enable": false,
+  "highlight.document.enable": true,
+  // coc-prettier
+  "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "prettier.disableLanguages": [],
+  // misc
+  "suggest.enablePreselect": false,
+  "suggest.noselect": true,
+  "suggest.removeDuplicateItems": true,
+  "suggest.timeout": 5000
+}
