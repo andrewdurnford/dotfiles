@@ -1,17 +1,77 @@
 syntax enable
+filetype plugin on
+filetype indent on
+
+set expandtab
+set smarttab
+set shiftwidth=4
+set tabstop=4
+
+set lbr
+set tw=80
+set ai
+set si
+
+" set nohlsearch
+" set hlsearch
+" set incsearch
+" set ignorecase
+" set showmatch
+
+" map <C-j> <C-W>j
+" map <C-k> <C-W>k
+" map <C-h> <C-W>h
+" map <C-l> <C-W>l
+
+" Delete trailing white space on save, useful for some filetypes ;)
+fun! CleanExtraSpaces()
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    silent! %s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
+endfun
+
+if has("autocmd")
+    autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
+endif
+
+" Move a line of text using ALT+[jk] or Command+[jk] on mac
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+if has("mac") || has("macunix")
+  nmap <D-j> <M-j>
+  nmap <D-k> <M-k>
+  vmap <D-j> <M-j>
+  vmap <D-k> <M-k>
+endif
+
+set ruler
 set encoding=utf-8
 set colorcolumn=80
+set signcolumn=yes
 set cmdheight=1
+set scrolloff=4
 set number
+set splitbelow splitright
 
 " VimPlug plugins
 call plug#begin('~/.config/nvim/plugins')
-    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'airblade/vim-gitgutter'
     Plug 'dracula/vim', { 'as': 'dracula' }
+    Plug 'gruvbox-community/gruvbox'
+    Plug 'joshdick/onedark.vim'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
     Plug 'kevinoid/vim-jsonc'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'preservim/nerdtree'
+    Plug 'stsewd/fzf-checkout.vim'
     Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-surround'
 call plug#end()
 
@@ -27,7 +87,12 @@ let g:coc_global_extensions = [
 
 " theme
 set termguicolors
+set background=dark
 colorscheme dracula
+" colorscheme onedark
+" colorscheme gruvbox
+
+" let $BAT_THEME='gruvbox'
 
 " tmux script
 nnoremap <silent> <C-f> :silent !tmux neww tmux-sessionizer<CR>
@@ -40,12 +105,24 @@ map <C-n> :NERDTreeToggle<CR>
 
 let g:NERDTreeQuitOnOpen = 1
 
+let NERDTreeShowHidden=1
+
 " -----------------------------------------------------------------------------
 " ctrlp
 " -----------------------------------------------------------------------------
 
 " Set path
-let g:ctrlp_working_path_mode=0
+" let g:ctrlp_working_path_mode=0
+
+" -----------------------------------------------------------------------------
+" fzf
+" -----------------------------------------------------------------------------
+" map <C-p> :Files<CR>
+nnoremap <silent> <C-p> :Files<CR>
+
+" command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
+command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
+
 
 " -----------------------------------------------------------------------------
 " statusline
@@ -65,7 +142,7 @@ endfunction
 set statusline=
 set statusline+=%#WildMenu#
 set statusline+=%{StatuslineGit()}
-set statusline+=%#StatusLine#
+set statusline+=%#StatusLineNC#
 set statusline+=\ %f
 set statusline+=%m
 set statusline+=%=
@@ -95,19 +172,19 @@ set nowritebackup
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
-set updatetime=300
+set updatetime=50
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-if has("nvim-0.5.0") || has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
+" if has("nvim-0.5.0") || has("patch-8.1.1564")
+"   " Recently vim can merge signcolumn and number column into one
+"   set signcolumn=number
+" else
+"   set signcolumn=yes
+" endif
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -116,7 +193,7 @@ inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
