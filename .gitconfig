@@ -3,7 +3,7 @@
 	email = andrewdurnford3@gmail.com
 
 [core]
-	editor = vim
+	editor = nvim
 
 [init]
 	defaultBranch = main
