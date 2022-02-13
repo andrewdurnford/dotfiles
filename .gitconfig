@@ -11,30 +11,52 @@
 [pull]
 	rebase = false
 
-[diff]
-	colorMoved = zebra
+; github.com/dracula/git
+
+; TODO: clone repository and include as path
 
 [color]
-	branch = auto
-	diff = auto
-	status = auto
-	showbranch = auto
-	ui = true
+  ui = auto
 
 [color "branch"]
-	current = yellow reverse
-	local = yellow
-	remote = green
+  current = cyan bold reverse
+  local = white
+  plain =
+  remote = cyan
 
 [color "diff"]
-	meta = yellow
-	frag = magenta bold
-	old = red bold
-	new = green bold
+  commit =
+  func = cyan
+  plain =
+  whitespace = magenta reverse
+  meta = white
+  frag = cyan bold reverse
+  old = red
+  new = green
+
+[color "grep"]
+  context =
+  filename =
+  function =
+  linenumber = white
+  match =
+  selected =
+  separator =
+
+[color "interactive"]
+  error =
+  header =
+  help =
+  prompt =
 
 [color "status"]
-	added = green bold
-	changed = yellow bold
-	untracked = red
-[pager]
-	branch = false
+  added = green
+  changed = white
+  header =
+  localBranch =
+  nobranch =
+  remoteBranch = cyan bold
+  unmerged = magenta bold reverse
+  untracked = red
+  updated = green bold
+
