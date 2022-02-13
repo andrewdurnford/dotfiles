@@ -1,55 +1,56 @@
 #!/usr/bin/env bash
 
-# Install Oh My Zsh
-if [ ! -d "$ZSH" ]; then
-  /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)"
-fi
-
-# Install Homebrew
+# install homebrew
 if test ! $(which brew); then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-# Install VimPlug
-if [ ! -f "$HOME/.config/nvim/autoload/plug.vim" ]; then 
-  /bin/sh -c 'curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+# install omz
+if [ ! -d "$ZSH" ]; then
+	/bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)"
 fi
 
-# Update Homebrew packages
+# install vimplug
+if [ ! -f "$HOME/.config/nvim/autoload/plug.vim" ]; then
+	/bin/sh -c 'curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs \
+			https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+fi
+
+# install zsh plugins
+# TODO: clone again to update repos
+git clone https://github.com/dracula/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/dracula-zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/dracula/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting-dracula
+
+# homebrew
 brew update
-
-# Install Homebrew packages
 brew bundle
 
-# TODO: Update to symlink all scripts in ./bin
-# Replaces tmux-sessioniser script with symlink to dotfiles
-rm -rf /usr/local/bin/tmux-sessionizer
-ln -s $HOME/code/andrewdurnford/dotfiles/bin/tmux-sessionizer /usr/local/bin/tmux-sessionizer
+DOTFILES=$HOME/code/andrewdurnford/dotfiles
 
-# Replaces .zshrc with symlink to dotfiles
-rm -rf $HOME/.zshrc
-ln -s $HOME/code/andrewdurnford/dotfiles/.zshrc $HOME/.zshrc
+# TODO: symlink bin scripts
+# for file in $DOTFILES/bin/*; do ln -sf $DOTFILES/bin/$file /usr/bin/local; done
 
-# Replaces .gitconfig with symlink to dotfiles
-rm -rf $HOME/.gitconfig
-ln -s $HOME/code/andrewdurnford/dotfiles/.gitconfig $HOME/.gitconfig
+# symlink git config
+ln -sf $DOTFILES/.gitconfig $HOME/.gitconfig
 
-# Replaces .tmux.conf with symlink to dotfiles
-rm -rf $HOME/.tmux.conf
-ln -s $HOME/code/andrewdurnford/dotfiles/.tmux.conf $HOME/.tmux.conf
-tmux source $HOME/.tmux.conf
+# symlink nvim config
+ln -sf $DOTFILES/nvim/init.vim $HOME/.config/nvim/init.vim
+ln -sf $DOTFILES/nvim/coc-settings.json $HOME/.config/nvim/coc-settings.json
 
-# Replaces init.vim with symlink to dotfiles
-rm -rf $HOME/.config/nvim/init.vim
-ln -s $HOME/code/andrewdurnford/dotfiles/nvim/init.vim $HOME/.config/nvim/init.vim
+# symlink zsh config
+ln -sf $DOTFILES/.zshrc $HOME/.zshrc
 
-# Replaces :CocConfig with symlink to dotfiles
-rm -rf $HOME/.config/nvim/coc-settings.json
-ln -s $HOME/code/andrewdurnford/dotfiles/nvim/coc-settings.json $HOME/.config/nvim/coc-settings.json
+# symlink tmux config
+ln -sf $DOTFILES/.tmux.conf $HOME/.tmux.conf
 
-# Install vim plugins
+# install vim plugins
 nvim --headless +PlugInstall +qall
 
-# Set macOS preferences
-source .macos
+# source macos preferences
+source $DOTFILES/.macos
+
+# source tmux config
+tmux source $HOME/.tmux.conf

@@ -1,5 +1,8 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/andrewdurnford/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -52,13 +55,14 @@ autoload -Uz compinit && compinit
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  docker
-  git
-  npm
-  nvm
+	docker
+	fzf
+	git
+	npm
+	nvm
+	ripgrep
+	tmux
 )
-
-source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -67,18 +71,43 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
-alias vim="nvim"
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# bat
+export BAT_THEME="Dracula"
 
 # curl
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 
-# homebrew 
-eval $(/opt/homebrew/bin/brew shellenv)
+# fzf
+if type rg &> /dev/null; then
+  export FZF_DEFAULT_COMMAND='rg --files --hidden -g "!{.git,node_modules}/*"'
+  export FZF_DEFAULT_OPTS='-m --height 50% --border --layout reverse'
+fi
+
+# homebrew
+export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew/bin:$PATH
+
+# nvim
+alias vim="nvim"
 
 # nvm
-export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="~/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-# tmux script
-bindkey -s ^f "tmux-sessionizer\n"
+# tmux
+bindkey -s ^n "tmux-sessionizer \n"
+# if [ -z "$TMUX" ] then tmux attach || tmux fi
+# alias exit='if [[ $TMUX = "" ]]; then exit; else tmux detach; fi'
+
+# zsh
+fpath+=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions/src
+source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/dracula-zsh-syntax-highlighting/zsh-syntax-highlighting.sh
+source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $ZSH/oh-my-zsh.sh
+
+# misc
+# npmrc() { cp ~/.npmrc . }
