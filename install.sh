@@ -30,8 +30,8 @@ brew bundle
 
 DOTFILES=$HOME/code/andrewdurnford/dotfiles
 
-# TODO: symlink bin scripts
-# for file in $DOTFILES/bin/*; do ln -sf $DOTFILES/bin/$file /usr/bin/local; done
+# symlink bin scripts
+for file in $DOTFILES/bin/*; do sudo ln -sf $file /usr/local/bin; done
 
 # symlink git config
 ln -sf $DOTFILES/git/.gitconfig $HOME/.gitconfig
