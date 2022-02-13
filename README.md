@@ -1,5 +1,33 @@
 # dotfiles
 
+```
+.
+├── bin
+│   └── tmux-sessionizer
+├── git
+│   ├── .gitconfig
+│   └── .gitignore
+├── iterm2
+│   └── com.googlecode.iterm2.plist
+├── macos
+│   ├── .macos
+│   └── README.md
+├── nvim
+│   ├── coc-settings.json
+│   └── init.vim
+├── tmux
+│   └── .tmux.conf
+├── zsh
+│   └── .zshrc
+├── .gitignore
+├── Brewfile
+├── LICENSE
+├── README.md
+└── install.sh
+```
+
+## Installation
+
 1. Update macOS to the latest version with the App Store
 2. Install rosetta (m1 mac)
 
@@ -47,45 +75,6 @@ cd dotfiles
 
 7. Customise system preferences
 
-```
-Dock & Menu Bar > Battery
-- `enable` "Show in Menu Bar"
-- `enable` "Show Percentage"
-
-Dock & Menu Bar > Now Playing
-- `enable` "Show in Menu Bar" "Always"
-
-Siri
-- `disable` "Enable Ask Siri"
-
-Security & Privacy > General
-- Allow apps downloaded from "App Store and identified developers"
-
-Security & Privacy > Firewall
-- `enable` "Turn On Firewall"
-
-Sound > Sound Effects
-- `enable` "Show volume in menu bar"
-
-Keyboard > Keyboard
-- Touchbar Shows "Expanded Control Strip"
-- `remap` Modifier Keys "Caps Lock" to "Control"
-
-Keyboard > Shortcuts
-- Move left / right a space "^ + <-" / "^ + ->"
-- Switch to Desktop 1-0 "^ + 1-0"
-
-Trackpad > Point & Click
-- `disable` "Force Click and haptic feedback"
-
-Trackpad > More Gestures
-- `enable` "App Exposé"
-
-Displays
-- `disable` "True Tone"
-
-Sharing
-- `disable` "File Sharing"
-```
+See [macOS README](./macos/README.md)
 
 8. Restart to finalise the process

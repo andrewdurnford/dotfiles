@@ -34,23 +34,27 @@ DOTFILES=$HOME/code/andrewdurnford/dotfiles
 # for file in $DOTFILES/bin/*; do ln -sf $DOTFILES/bin/$file /usr/bin/local; done
 
 # symlink git config
-ln -sf $DOTFILES/.gitconfig $HOME/.gitconfig
+ln -sf $DOTFILES/git/.gitconfig $HOME/.gitconfig
+ln -sf $DOTFILES/git/.gitignore $HOME/.gitignore
+
+# symlink macos config
+ln -sf $DOTFILES/macos/.macos $HOME/.macos
 
 # symlink nvim config
 ln -sf $DOTFILES/nvim/init.vim $HOME/.config/nvim/init.vim
 ln -sf $DOTFILES/nvim/coc-settings.json $HOME/.config/nvim/coc-settings.json
 
 # symlink zsh config
-ln -sf $DOTFILES/.zshrc $HOME/.zshrc
+ln -sf $DOTFILES/zsh/.zshrc $HOME/.zshrc
 
 # symlink tmux config
-ln -sf $DOTFILES/.tmux.conf $HOME/.tmux.conf
+ln -sf $DOTFILES/tmux/.tmux.conf $HOME/.tmux.conf
 
 # install vim plugins
 nvim --headless +PlugInstall +qall
 
 # source macos preferences
-source $DOTFILES/.macos
+source $HOME/.macos
 
 # source tmux config
 tmux source $HOME/.tmux.conf
