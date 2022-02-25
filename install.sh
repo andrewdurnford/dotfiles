@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # install homebrew
 if test ! $(which brew); then
@@ -46,15 +46,18 @@ ln -sf $DOTFILES/nvim/coc-settings.json $HOME/.config/nvim/coc-settings.json
 
 # symlink zsh config
 ln -sf $DOTFILES/zsh/.zshrc $HOME/.zshrc
+source $HOME/.zshrc
 
 # symlink tmux config
 ln -sf $DOTFILES/tmux/.tmux.conf $HOME/.tmux.conf
+tmux source $HOME/.tmux.conf
+
+# install node via nvm
+nvm install node
 
 # install vim plugins
 nvim --headless +PlugInstall +qall
 
-# source macos preferences
 source $HOME/.macos
+source $HOME/.zshrc
 
-# source tmux config
-tmux source $HOME/.tmux.conf
