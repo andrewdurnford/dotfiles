@@ -101,7 +101,13 @@ export NVM_DIR="~/.nvm"
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # tmux
-bindkey -s ^n "tmux-sessionizer \n"
+tmux-sessionizer-widget() { 
+    tmux-sessionizer 
+    zle push-line
+    zle reset-prompt 
+}
+zle -N tmux-sessionizer-widget
+bindkey ^f tmux-sessionizer-widget
 # if [ -z "$TMUX" ] then tmux attach || tmux fi
 # alias exit='if [[ $TMUX = "" ]]; then exit; else tmux detach; fi'
 
