@@ -84,6 +84,9 @@ export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 if type rg &> /dev/null; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden -g "!{.git,node_modules}/*"'
   export FZF_DEFAULT_OPTS='-m --height 50% --border --layout reverse'
+  # TODO: filter non-adjacent duplicates
+  export FZF_ALT_C_COMMAND='rg --files --hidden -g "!{.git,node_modules}/*" --null | xargs -0 dirname | uniq"'
+  export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 fi
 
 # homebrew
