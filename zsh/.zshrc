@@ -77,9 +77,6 @@ plugins=(
 # bat
 export BAT_THEME="Dracula"
 
-# curl
-export PATH="/opt/homebrew/opt/curl/bin:$PATH"
-
 # fzf
 if type rg &> /dev/null; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden -g "!{.git,node_modules}/*"'
@@ -90,7 +87,10 @@ if type rg &> /dev/null; then
 fi
 
 # homebrew
-export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew/bin:$PATH
+eval $(/opt/homebrew/bin/brew shellenv)
+export HOMEBREW_FORCE_BREWED_CURL=1
+export HOMEBREW_FORCE_BREWED_GIT=1
+export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/opt/curl/bin:$PATH
 
 # nvim
 alias vim="nvim"
@@ -119,3 +119,6 @@ source $ZSH/oh-my-zsh.sh
 
 # misc
 # npmrc() { cp ~/.npmrc . }
+
+# remove duplicates from $PATH
+typeset -aU path
