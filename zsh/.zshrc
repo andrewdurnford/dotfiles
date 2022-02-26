@@ -75,7 +75,7 @@ plugins=(
 # export ARCHFLAGS="-arch x86_64"
 
 # bat
-export BAT_THEME="Dracula"
+export BAT_THEME="gruvbox-dark"
 
 # fzf
 if type rg &> /dev/null; then

@@ -1,174 +1,183 @@
-syntax enable
-filetype plugin on
-filetype indent on
+" -----------------------------------------------------------------------------
+" Plugins
+" -----------------------------------------------------------------------------
 
-set expandtab
-set smarttab
-set shiftwidth=4
-set tabstop=4
-
-set lbr
-set tw=80
-set ai
-set si
-
-" set nohlsearch
-" set hlsearch
-" set incsearch
-" set ignorecase
-" set showmatch
-
-" map <C-j> <C-W>j
-" map <C-k> <C-W>k
-" map <C-h> <C-W>h
-" map <C-l> <C-W>l
-
-" Delete trailing white space on save, useful for some filetypes ;)
-fun! CleanExtraSpaces()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    silent! %s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
-endfun
-
-if has("autocmd")
-    autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
-endif
-
-" Move a line of text using ALT+[jk] or Command+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
-endif
-
-set ruler
-set encoding=utf-8
-set colorcolumn=80
-set signcolumn=yes
-set cmdheight=1
-set scrolloff=4
-set number
-set splitbelow splitright
-
-" VimPlug plugins
+" VimPlug
 call plug#begin('~/.config/nvim/plugins')
-    Plug 'airblade/vim-gitgutter'
-    Plug 'dracula/vim', { 'as': 'dracula' }
-    Plug 'gruvbox-community/gruvbox'
-    Plug 'joshdick/onedark.vim'
+    " LSP"
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+    " JSON
+    Plug 'kevinoid/vim-jsonc'
+
+    " TypeScript
+    Plug 'yuezk/vim-js'
+    Plug 'maxmellon/vim-jsx-pretty'
+    Plug 'HerringtonDarkholme/yats.vim'
+
+    " Prisma
+    Plug 'pantharshit00/vim-prisma'
+
+    " GraphQL
+    Plug 'jparise/vim-graphql'
+
+    " styled-components
+    Plug 'styled-components/vim-styled-components'
+
+    " FZF
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
-    Plug 'kevinoid/vim-jsonc'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'preservim/nerdtree'
     Plug 'stsewd/fzf-checkout.vim'
+
+    Plug 'airblade/vim-gitgutter'
+    Plug 'itchyny/lightline.vim'
+    Plug 'morhetz/gruvbox'
+    Plug 'preservim/nerdtree'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-surround'
 call plug#end()
 
-" CoC extensions
+" CoC Extensions
 let g:coc_global_extensions = [
   \ 'coc-css',
   \ 'coc-eslint',
   \ 'coc-highlight',
   \ 'coc-html',
+  \ 'coc-json',
   \ 'coc-pairs',
-  \ 'coc-tsserver'
+  \ 'coc-prettier',
+  \ 'coc-prisma',
+  \ 'coc-styled-components',
+  \ 'coc-tsserver',
+  \ 'coc-yaml',
+  \ 'coc-vimlsp'
   \ ]
 
-" theme
+" -----------------------------------------------------------------------------
+" Theme
+" -----------------------------------------------------------------------------
+
+syntax on
+set t_Co=256
 set termguicolors
 set background=dark
-colorscheme dracula
-" colorscheme onedark
-" colorscheme gruvbox
+let g:gruvbox_contrast_dark='hard'
+colorscheme gruvbox
 
-" let $BAT_THEME='gruvbox'
+" fix signcolumn using wrong gruvbox colors
+hi SignColumn guibg=none
+highlight! link GitGutterAdd GruvboxGreen
+highlight! link GitGutterChange GruvboxAqua
+highlight! link GitGutterDelete GruvboxRed
+highlight! link GitGutterChangeDelete GruvboxAqua
 
-" tmux script
-nnoremap <silent> <C-f> :silent !tmux neww tmux-sessionizer<CR>
+" Sync large files for highlighting
+autocmd BufEnter *.{js,jsx,ts,tsx,prisma} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx,prisma} :syntax sync clear
+
+" Set .js files as javascriptreact
+augroup filetype_jsx
+    autocmd!
+    autocmd FileType javascript set filetype=javascriptreact
+augroup END
+
+" -----------------------------------------------------------------------------
+" Status Line
+" -----------------------------------------------------------------------------
+
+set laststatus=2
+
+let g:lightline = {
+        \ 'colorscheme': 'gruvbox',
+        \ 'active': {
+            \ 'left': [
+                \ ['gitbranch'], 
+                \ [],
+                \ ['readonly', 'filename'], 
+                \ ['cocstatus', 'currentfunction']
+            \ ],
+            \ 'right': [
+                \ ['lineinfo'],
+                \ [],
+                \ ['filetype', 'fileencoding', 'fileformat']
+            \ ]
+        \ },
+        \ 'component_function': {
+            \ 'filename': 'LightlineFilename',
+            \ 'gitbranch': 'FugitiveHead',
+            \ 'cocstatus': 'coc#status',
+            \ 'currentfunction': 'CocCurrentFunction'
+        \ }
+      \ }
+
+function! LightlineFilename()
+  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+  let modified = &modified ? ' [+]' : ''
+  return filename . modified
+endfunction
 
 " -----------------------------------------------------------------------------
 " NERDTree
 " -----------------------------------------------------------------------------
 
-map <C-n> :NERDTreeToggle<CR>
+let g:NERDTreeShowHidden=1
+let g:NERDTreeAutoDeleteBuffer=1
+let g:NERDTreeQuitOnOpen=1
 
-let g:NERDTreeQuitOnOpen = 1
-
-let NERDTreeShowHidden=1
-
-" -----------------------------------------------------------------------------
-" ctrlp
-" -----------------------------------------------------------------------------
-
-" Set path
-" let g:ctrlp_working_path_mode=0
+nnoremap <silent> <expr> <Leader>n g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
 
 " -----------------------------------------------------------------------------
-" fzf
+" FZF
 " -----------------------------------------------------------------------------
-" map <C-p> :Files<CR>
+
 nnoremap <silent> <C-p> :Files<CR>
 
-" command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
 command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
 
-
 " -----------------------------------------------------------------------------
-" statusline
-" -----------------------------------------------------------------------------
-
-set laststatus=2
-
-function! GitBranch()
-  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
-
-function! StatuslineGit()
-  let l:branchname = GitBranch()
-  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-endfunction
-
-set statusline=
-set statusline+=%#WildMenu#
-set statusline+=%{StatuslineGit()}
-set statusline+=%#StatusLineNC#
-set statusline+=\ %f
-set statusline+=%m
-set statusline+=%=
-set statusline+=\ %{coc#status()}%{get(b:,'coc_current_function','')}
-set statusline+=%=
-set statusline+=\ %y
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
-set statusline+=\[%{&fileformat}\]
-set statusline+=\ %p%%
-set statusline+=\ %l:%c
-set statusline+=\ 
-
-" -----------------------------------------------------------------------------
-" coc settings
+" Settings
 " -----------------------------------------------------------------------------
 
-" coc-highlight
-autocmd CursorHold * silent call CocActionAsync('highlight')
-highlight CocErrorHighlight ctermfg=Red  guifg=#ff0000
+" let mapleader = " "
 
-" TextEdit might fail if hidden is not set.
+syntax enable
+filetype plugin on
+filetype indent on
+
+set linebreak
+set textwidth=80
+set autoindent
+set smartindent
+
+" set ignorecase
+" set showmatch
+
+set encoding=utf-8
+
+set guicursor=
+" set relativenumber
+" set nohlsearch
+" set incsearch
 set hidden
-
-" Some servers have issues with backup files, see #649.
+set noerrorbells
+set tabstop=4 softtabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
+set number
+set nowrap
+set noswapfile
 set nobackup
 set nowritebackup
+set scrolloff=8
+set signcolumn=yes
+set colorcolumn=80
+set isfname+=@-@
+set splitbelow splitright
+
+" Give more space for displaying messages
+set cmdheight=1
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -177,14 +186,14 @@ set updatetime=50
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-" if has("nvim-0.5.0") || has("patch-8.1.1564")
-"   " Recently vim can merge signcolumn and number column into one
-"   set signcolumn=number
-" else
-"   set signcolumn=yes
-" endif
+nnoremap <silent> <C-f> :silent !tmux neww tmux-sessionizer<CR>
+
+" -----------------------------------------------------------------------------
+" CoC Settings
+" -----------------------------------------------------------------------------
+
+" coc-highlight
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
