@@ -15,7 +15,12 @@
 │   └── README.md
 ├── nvim
 │   ├── lua
-│   │   └── config.lua
+│   │   └── user
+│   │       ├── autopairs.lua
+│   │       ├── colorizer.lua
+│   │       ├── gitsigns.lua
+│   │       ├── lsp-config.lua
+│   │       └── treesitter.lua
 │   └── init.vim
 ├── tmux
 │   └── .tmux.conf

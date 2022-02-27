@@ -12,22 +12,23 @@ Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'MunifTanjim/prettier.nvim'
+Plug 'b0o/schemastore.nvim'
 
 " Completions
 Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-buffer'
 Plug 'windwp/nvim-autopairs'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'RRethy/nvim-treesitter-endwise'
+Plug 'L3MON4D3/LuaSnip'
 
 " Highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 Plug 'norcalli/nvim-colorizer.lua'
-" Plug 'p00f/nvim-ts-rainbow'
 
 " Tabs
 Plug 'tpope/vim-sleuth'
@@ -49,6 +50,7 @@ Plug 'preservim/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 
+
 call plug#end()
 
 " -----------------------------------------------------------------------------
@@ -63,6 +65,23 @@ set background=dark
 let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_invert_selection="0"
 colorscheme gruvbox
+
+" gray
+highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
+" blue
+highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
+highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#569CD6
+" light blue
+highlight! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
+highlight! CmpItemKindInterface guibg=NONE guifg=#9CDCFE
+highlight! CmpItemKindText guibg=NONE guifg=#9CDCFE
+" pink
+highlight! CmpItemKindFunction guibg=NONE guifg=#C586C0
+highlight! CmpItemKindMethod guibg=NONE guifg=#C586C0
+" front
+highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
+highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
+highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
 
 " Fix gruvbox highlight groups when using hard contrast
 hi SignColumn guibg=none
@@ -83,10 +102,8 @@ highlight! link tsxTSConditional NormalNC
 highlight! link tsxTSInclude GruvboxPurple
 highlight! link tsxTSParameter SignColumn
 highlight! link tsxTSVariable SignColum
-highlight! link tsxTSOperator SignColum
 highlight! link tsxTSParameter SignColum
 highlight! link tsxTSOperator GruvboxPurple
-highlight! link tsxTSPunctDelimiter GruvboxPurple
 highlight! link tsxTSProperty GruvboxAqua
 highlight! link tsxTSConstant GruvboxBlueBold
 
@@ -221,5 +238,8 @@ set shortmess+=c
 
 nnoremap <silent> <C-f> :silent !tmux neww tmux-sessionizer<CR>
 
-lua require("config")
-
+lua require("user.autopairs")
+lua require("user.colorizer")
+lua require("user.gitsigns")
+lua require("user.lsp-config")
+lua require("user.treesitter")
