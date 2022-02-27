@@ -3,7 +3,8 @@
 ```
 .
 ├── bin
-│   └── tmux-sessionizer
+│   ├── tmux-sessionizer
+│   └── tmux-windowizer
 ├── git
 │   ├── .gitconfig
 │   └── .gitignore
@@ -13,7 +14,8 @@
 │   ├── .macos
 │   └── README.md
 ├── nvim
-│   ├── coc-settings.json
+│   ├── lua
+│   │   └── config.lua
 │   └── init.vim
 ├── tmux
 │   └── .tmux.conf

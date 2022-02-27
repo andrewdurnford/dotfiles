@@ -42,7 +42,7 @@ ln -sf $DOTFILES/macos/.macos $HOME/.macos
 
 # symlink nvim config
 ln -sf $DOTFILES/nvim/init.vim $HOME/.config/nvim/init.vim
-ln -sf $DOTFILES/nvim/coc-settings.json $HOME/.config/nvim/coc-settings.json
+ln -sf $DOTFILES/nvim/lua/config.lua $HOME/.config/nvim/lua/config.lua
 
 # symlink zsh config
 ln -sf $DOTFILES/zsh/.zshrc $HOME/.zshrc

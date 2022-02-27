@@ -120,5 +120,11 @@ source $ZSH/oh-my-zsh.sh
 # misc
 # npmrc() { cp ~/.npmrc . }
 
+alias gs="git status"
+
+# amend commit without changing date
+# see: https://stackoverflow.com/a/61217637
+alias gca="GIT_COMMITTER_DATE=\"$(git log -n 1 --format=%aD)\" git commit --amend --date=\"$(git log -n 1 --format=%aD)\""
+
 # remove duplicates from $PATH
 typeset -aU path
