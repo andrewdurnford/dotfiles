@@ -119,10 +119,6 @@ local on_attach = function(client)
     vim.api.nvim_buf_set_keymap(0,'n','gl', '<cmd>lua vim.diagnostic.open_float()<CR>',opts)
     vim.api.nvim_buf_set_keymap(0,'n','rn','<cmd>lua vim.lsp.buf.rename()<CR>',opts)
     vim.api.nvim_buf_set_keymap(0,'n','ff', '<cmd>lua vim.lsp.buf.formatting()<CR>',opts)
-
-    if client.resolved_capabilities.document_formatting then
-        vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()")
-    end
 end
 
 -- Lsp Installer
@@ -224,7 +220,7 @@ local sources = {
     null_ls.builtins.diagnostics.stylelint,
 
     -- null_ls.builtins.formatting.gofmt,
-    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.formatting.prettier,
     null_ls.builtins.formatting.prismaFmt,
     null_ls.builtins.formatting.stylelint,
     -- null_ls.builtins.formatting.stylelua,
@@ -232,6 +228,12 @@ local sources = {
 
 null_ls.setup({
     sources = sources,
-    on_attach = on_attach,
+    on_attach = function(client)
+        -- TODO: auto format files on save with null-ls
+        -- if client.resolved_capabilities.document_formatting then
+        --     vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+        -- end
+        on_attach(client)
+    end,
     diagnostics_format = "[#{c}] #{m} (#{s})",
 })
