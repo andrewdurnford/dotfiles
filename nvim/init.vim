@@ -50,7 +50,6 @@ Plug 'preservim/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 
-
 call plug#end()
 
 " -----------------------------------------------------------------------------
@@ -213,6 +212,7 @@ set guicursor=
 " set relativenumber
 " set nohlsearch
 " set incsearch
+set autoread
 set hidden
 set noerrorbells
 set number
