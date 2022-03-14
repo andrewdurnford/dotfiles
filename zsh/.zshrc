@@ -106,7 +106,7 @@ tmux-sessionizer-widget() {
     zle reset-prompt 
 }
 zle -N tmux-sessionizer-widget
-bindkey ^f tmux-sessionizer-widget
+bindkey ^n tmux-sessionizer-widget
 # if [ -z "$TMUX" ] then tmux attach || tmux fi
 # alias exit='if [[ $TMUX = "" ]]; then exit; else tmux detach; fi'
 

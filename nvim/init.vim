@@ -178,15 +178,27 @@ nnoremap <silent> <expr> <Leader>n g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" :
 " FZF
 " -----------------------------------------------------------------------------
 
-nnoremap <silent> <C-p> :Files<CR>
+command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
 
-command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
+nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <C-f> :Rg<CR>
+nnoremap <silent> <C-n> :silent !tmux neww tmux-sessionizer<CR>
+
+" -----------------------------------------------------------------------------
+" git
+" -----------------------------------------------------------------------------
+
+noremap <leader>gc :GBranches<CR>
+noremap <leader>gs :G<CR>
+noremap <leader>gp :Git push -u origin HEAD<CR>
+nmap <leader>gh :diffget //2<CR>
+nmap <leader>gl :diffget //3<CR>
 
 " -----------------------------------------------------------------------------
 " Settings
 " -----------------------------------------------------------------------------
 
-" let mapleader = " "
+let mapleader = " "
 
 syntax enable
 filetype plugin on
@@ -235,8 +247,6 @@ set updatetime=50
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
-
-nnoremap <silent> <C-f> :silent !tmux neww tmux-sessionizer<CR>
 
 lua require("user.autopairs")
 lua require("user.colorizer")
