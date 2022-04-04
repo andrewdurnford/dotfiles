@@ -53,7 +53,7 @@ ln -sf $DOTFILES/tmux/.tmux.conf $HOME/.tmux.conf
 tmux source $HOME/.tmux.conf
 
 # install node via nvm
-nvm install node
+nvm install --lts
 
 # install vim plugins
 nvim --headless +PlugInstall +qall
