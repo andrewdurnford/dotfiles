@@ -46,7 +46,7 @@ Plug 'lewis6991/gitsigns.nvim'
 
 " Misc
 Plug 'gruvbox-community/gruvbox'
-Plug 'itchyny/lightline.vim'
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -132,40 +132,6 @@ augroup filetype_jsx
 augroup END
 
 " -----------------------------------------------------------------------------
-" Status Line
-" -----------------------------------------------------------------------------
-set laststatus=2
-
-let g:lightline = {
-    \ 'colorscheme': 'gruvbox',
-    \ 'active': {
-        \ 'left': [
-            \ ['gitbranch'], 
-            \ [],
-            \ ['readonly', 'filename'], 
-            \ ['cocstatus', 'currentfunction']
-        \ ],
-        \ 'right': [
-            \ ['lineinfo'],
-            \ [],
-            \ ['filetype', 'fileencoding', 'fileformat']
-        \ ]
-    \ },
-    \ 'component_function': {
-        \ 'filename': 'LightlineFilename',
-        \ 'gitbranch': 'FugitiveHead',
-        \ 'cocstatus': 'coc#status',
-        \ 'currentfunction': 'CocCurrentFunction'
-    \ }
-\ }
-
-function! LightlineFilename()
-    let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
-    let modified = &modified ? ' [+]' : ''
-    return filename . modified
-endfunction
-
-" -----------------------------------------------------------------------------
 " NERDTree
 " -----------------------------------------------------------------------------
 
@@ -205,6 +171,7 @@ syntax enable
 filetype plugin on
 filetype indent on
 
+set laststatus=2
 set linebreak
 set textwidth=80
 set autoindent
@@ -253,4 +220,5 @@ lua require("user.autopairs")
 lua require("user.colorizer")
 lua require("user.gitsigns")
 lua require("user.lsp-config")
+lua require("user.lualine")
 lua require("user.treesitter")
