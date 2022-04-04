@@ -62,6 +62,8 @@ plugins=(
 	nvm
 	ripgrep
 	tmux
+	zsh-autosuggestions
+	zsh-syntax-highlighting
 )
 
 # Preferred editor for local and remote sessions
@@ -111,10 +113,9 @@ bindkey ^n tmux-sessionizer-widget
 # alias exit='if [[ $TMUX = "" ]]; then exit; else tmux detach; fi'
 
 # zsh
-fpath+=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions/src
-source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/dracula-zsh-syntax-highlighting/zsh-syntax-highlighting.sh
-source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fpath+=$(brew --prefix)/share/zsh-completions
+autoload -Uz compinit
+compinit
 source $ZSH/oh-my-zsh.sh
 
 # misc

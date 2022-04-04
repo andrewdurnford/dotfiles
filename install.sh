@@ -16,13 +16,8 @@ if [ ! -f "$HOME/.config/nvim/autoload/plug.vim" ]; then
 			https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 fi
 
-# install zsh plugins
-# TODO: clone again to update repos
-git clone https://github.com/dracula/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/dracula-zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/dracula/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting-dracula
+# suppress zsh-completion homebrew warning
+chmod -R go-w /opt/homebrew/share
 
 # homebrew
 brew update
