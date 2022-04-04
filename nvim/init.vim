@@ -31,24 +31,21 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 Plug 'norcalli/nvim-colorizer.lua'
 
-" Tabs
-Plug 'tpope/vim-sleuth'
-Plug 'lukas-reineke/indent-blankline.nvim'
-
 " FZF
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'stsewd/fzf-checkout.vim'
 
-" Git
-Plug 'tpope/vim-fugitive'
-Plug 'lewis6991/gitsigns.nvim'
-
 " Misc
 Plug 'gruvbox-community/gruvbox'
+Plug 'lewis6991/gitsigns.nvim'
+Plug 'lewis6991/foldsigns.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 
 call plug#end()
