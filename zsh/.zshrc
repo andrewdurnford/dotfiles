@@ -118,9 +118,6 @@ autoload -Uz compinit
 compinit
 source $ZSH/oh-my-zsh.sh
 
-# misc
-# npmrc() { cp ~/.npmrc . }
-
 alias gs="git status"
 
 # amend commit without changing date
