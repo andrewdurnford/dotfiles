@@ -31,17 +31,14 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 Plug 'norcalli/nvim-colorizer.lua'
 
-" FZF
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'stsewd/fzf-checkout.vim'
-
 " Misc
 Plug 'gruvbox-community/gruvbox'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'lewis6991/foldsigns.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -82,7 +79,7 @@ highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
 
 " Fix gruvbox highlight groups when using hard contrast
 hi SignColumn guibg=none
-highlight! link GitSignsAdd GruvboxGreen
+highlight! link GitSignsAdd GruvboxAqua
 highlight! link GitSignsChange GruvboxYellow
 highlight! link GitSignsDelete GruvboxRed
 highlight! link GitSignsChangeDelete GruvboxYellow
@@ -139,13 +136,12 @@ let g:NERDTreeQuitOnOpen=1
 nnoremap <silent> <expr> <Leader>n g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
 
 " -----------------------------------------------------------------------------
-" FZF
+" FZF / Telescope
 " -----------------------------------------------------------------------------
 
-command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
-
-nnoremap <silent> <C-p> :Files<CR>
-nnoremap <silent> <C-f> :Rg<CR>
+" NOTE: use `:e .env` to open env files which are hidden in .gitignore
+nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <C-f> <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <silent> <C-n> :silent !tmux neww tmux-sessionizer<CR>
 
 " -----------------------------------------------------------------------------
@@ -218,4 +214,5 @@ lua require("user.colorizer")
 lua require("user.gitsigns")
 lua require("user.lsp-config")
 lua require("user.lualine")
+lua require("user.telescope")
 lua require("user.treesitter")
