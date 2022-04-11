@@ -27,12 +27,12 @@ Plug 'RRethy/nvim-treesitter-endwise'
 Plug 'L3MON4D3/LuaSnip'
 
 " Highlighting
+Plug 'navarasu/onedark.nvim'
+Plug 'norcalli/nvim-colorizer.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
-Plug 'norcalli/nvim-colorizer.lua'
 
 " Misc
-Plug 'gruvbox-community/gruvbox'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'lewis6991/foldsigns.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
@@ -56,68 +56,7 @@ set t_Co=256
 set termguicolors
 set background=dark
 
-let g:gruvbox_contrast_dark="hard"
-let g:gruvbox_invert_selection="0"
-colorscheme gruvbox
-
-" gray
-highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
-" blue
-highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
-highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#569CD6
-" light blue
-highlight! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
-highlight! CmpItemKindInterface guibg=NONE guifg=#9CDCFE
-highlight! CmpItemKindText guibg=NONE guifg=#9CDCFE
-" pink
-highlight! CmpItemKindFunction guibg=NONE guifg=#C586C0
-highlight! CmpItemKindMethod guibg=NONE guifg=#C586C0
-" front
-highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
-highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
-highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
-
-" Fix gruvbox highlight groups when using hard contrast
-hi SignColumn guibg=none
-highlight! link GitSignsAdd GruvboxAqua
-highlight! link GitSignsChange GruvboxYellow
-highlight! link GitSignsDelete GruvboxRed
-highlight! link GitSignsChangeDelete GruvboxYellow
-
-" Fix treesitter using clashing highlight groups with gruvbox in some languages
-
-" typescriptreact
-highlight! link tsxTSConstructor GruvboxYellowBold
-highlight! link tsxTSTag GruvboxYellow
-highlight! link tsxTSTagDelimiter GruvboxAqua
-highlight! link tsxTSPunctBracket GruvboxBlue
-" ISSUE: https://github.com/tree-sitter/tree-sitter-typescript/issues/200
-highlight! link tsxTSConditional NormalNC
-highlight! link tsxTSInclude GruvboxPurple
-highlight! link tsxTSParameter SignColumn
-highlight! link tsxTSVariable SignColum
-highlight! link tsxTSParameter SignColum
-highlight! link tsxTSOperator GruvboxPurple
-highlight! link tsxTSProperty GruvboxAqua
-highlight! link tsxTSConstant GruvboxBlueBold
-
-" TODO: typescript
-
-" javascript / javascriptreact
-highlight! link javascriptTSConstructor GruvboxYellow
-highlight! link javascriptTSTag GruvboxYellow
-highlight! link javascriptTSTagDelimiter GruvboxAqua
-highlight! link javascriptTSPunctBracket GruvboxBlue
-highlight! link javascriptTSNamespace GruvboxBlue
-highlight! link javascriptTSProperty GruvboxAqua
-
-" todo comments
-highlight! link commentTSNote GruvboxFg0
-highlight! link commentTSWarning GruvboxFg0
-highlight! link commentTSDanger DiagnosticError
-highlight! link commentTSPunctDelimiter GruvboxBlue
-
-" TODO: prisma
+colorscheme onedark
 
 " Set .js files as javascriptreact
 augroup filetype_jsx
@@ -214,5 +153,6 @@ lua require("user.colorizer")
 lua require("user.gitsigns")
 lua require("user.lsp-config")
 lua require("user.lualine")
+lua require("user.onedark")
 lua require("user.telescope")
 lua require("user.treesitter")
