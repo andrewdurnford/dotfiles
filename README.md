@@ -3,6 +3,7 @@
 ```
 .
 ├── bin
+│   ├── git-commit-date
 │   ├── tmux-sessionizer
 │   └── tmux-windowizer
 ├── git
@@ -20,6 +21,9 @@
 │   │       ├── colorizer.lua
 │   │       ├── gitsigns.lua
 │   │       ├── lsp-config.lua
+│   │       ├── lualine.lua
+│   │       ├── onedark.lua
+│   │       ├── telescope.lua
 │   │       └── treesitter.lua
 │   └── init.vim
 ├── tmux

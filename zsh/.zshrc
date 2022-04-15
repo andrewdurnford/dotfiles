@@ -118,11 +118,20 @@ autoload -Uz compinit
 compinit
 source $ZSH/oh-my-zsh.sh
 
+# git
+git-commit-amend-widget() {
+    # amend commit without changing date
+    # see: https://stackoverflow.com/a/61217637
+    GIT_COMMITTER_DATE="$(git log -n 1 --format=%aD)" git commit --amend --date="$(git log -n 1 --format=%aD)"
+}
+zle -N git-commit-amend-widget
+unalias gca
+unalias gl
+alias gca="git-commit-amend-widget"
+alias gcd="git-commit-date"
+# https://stackoverflow.com/q/1441010
+alias gl="git log --pretty=format:\"%h%x09%an%x09%ad%x09%s\""
 alias gs="git status"
-
-# amend commit without changing date
-# see: https://stackoverflow.com/a/61217637
-alias gca="GIT_COMMITTER_DATE=\"$(git log -n 1 --format=%aD)\" git commit --amend --date=\"$(git log -n 1 --format=%aD)\""
 
 # remove duplicates from $PATH
 typeset -aU path

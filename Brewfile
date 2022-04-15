@@ -4,6 +4,7 @@ tap 'homebrew/cask-fonts'
 
 # Binaries
 brew 'bat'
+brew 'bash'
 brew 'curl'
 brew 'ffmpeg'
 brew 'fzf'

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# update git commit date
+# https://stackoverflow.com/a/61217637
+
+commit_date=$(git log -n 1 --format=%aD 2>&1)
+
+if [[ "${BASH_VERSINFO:-0}" -ge 4 ]]; then
+    read -p "commit date: " -i "$commit_date" -e new_date
+else
+    echo "old commit date: $commit_date"
+    read -p "new commit date: " new_date
+    [ -z "${new_date}" ] && new_date=$commit_date
+fi
+
+GIT_COMMITTER_DATE="$new_date" git commit --amend --date="$new_date"

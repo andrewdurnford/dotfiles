@@ -81,17 +81,20 @@ nnoremap <silent> <expr> <Leader>n g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" :
 " NOTE: use `:e .env` to open env files which are hidden in .gitignore
 nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <C-f> <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <C-b> <cmd>lua require('telescope.builtin').git_branches()<cr>
 nnoremap <silent> <C-n> :silent !tmux neww tmux-sessionizer<CR>
 
 " -----------------------------------------------------------------------------
 " git
 " -----------------------------------------------------------------------------
 
-noremap <leader>gc :GBranches<CR>
 noremap <leader>gs :G<CR>
-noremap <leader>gp :Git push -u origin HEAD<CR>
+noremap <leader>gpf :Git push -f<CR>
+noremap <leader>gph :Git push -u origin HEAD<CR>
 nmap <leader>gh :diffget //2<CR>
 nmap <leader>gl :diffget //3<CR>
+" TODO: git-commit-amend (persist date)
+" TODO: git-commit-date
 
 " -----------------------------------------------------------------------------
 " Settings
