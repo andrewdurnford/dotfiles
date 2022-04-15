@@ -1,10 +1,5 @@
 -- Completions
 
-local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
-end
-
 local cmp = require'cmp'
 
 cmp.setup({
@@ -17,24 +12,6 @@ cmp.setup({
         ['<C-e>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
         ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
         ['<CR>'] = cmp.mapping.confirm({ select = false }),
-        ['<Tab>'] = function(fallback)
-            if not cmp.select_next_item() then
-                if vim.bo.buftype ~= 'prompt' and has_words_before() then
-                    cmp.complete()
-                else
-                    fallback()
-                end
-            end
-        end,
-        ['<S-Tab>'] = function(fallback)
-            if not cmp.select_prev_item() then
-                if vim.bo.buftype ~= 'prompt' and has_words_before() then
-                    cmp.complete()
-                else
-                    fallback()
-                end
-            end
-        end,
     },
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
@@ -57,6 +34,7 @@ cmp.setup({
         format = function(entry, vim_item)
             vim_item.menu = ({
                 nvim_lsp = "[LSP]",
+                nvim_lua = "[lua]",
                 emoji = "[emoji]",
                 path = "[path]",
                 calc = "[calc]",
@@ -107,25 +85,6 @@ cmp.setup.cmdline(':', {
 
 -- LspConfig
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-local on_attach = function(client)
-    local opts = { noremap = true, silent = true }
-    vim.api.nvim_buf_set_keymap(0,'n','K','<cmd>lua vim.lsp.buf.hover()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','gs','<cmd>lua vim.lsp.buf.signature_help()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','gd','<cmd>lua vim.lsp.buf.definition()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','gt','<cmd>lua vim.lsp.buf.type_definition()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','ga','<cmd>lua vim.lsp.buf.code_action()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','gr','<cmd>lua vim.lsp.buf.references()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','gl', '<cmd>lua vim.diagnostic.open_float()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','rn','<cmd>lua vim.lsp.buf.rename()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','ff', '<cmd>lua vim.lsp.buf.formatting()<CR>',opts)
-end
-
--- Lsp Installer
-
-local lsp_installer = require("nvim-lsp-installer")
-
 local servers = {
     "cssls",
     "dockerls",
@@ -140,6 +99,58 @@ local servers = {
     "yamlls",
 }
 
+local on_attach = function(client)
+    if client.name == 'tsserver' then
+        -- disable formatting
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+
+        -- format on save
+        vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync()")
+
+        -- setup ts-utils
+        local ts_utils = require("nvim-lsp-ts-utils")
+        ts_utils.setup()
+        ts_utils.setup_client(client)
+    end
+
+    -- lsp remaps
+    local opts = { noremap = true, silent = true }
+    vim.api.nvim_buf_set_keymap(0,'n','K','<cmd>lua vim.lsp.buf.hover()<CR>',opts)
+    vim.api.nvim_buf_set_keymap(0,'n','gs','<cmd>lua vim.lsp.buf.signature_help()<CR>',opts)
+    vim.api.nvim_buf_set_keymap(0,'n','gd','<cmd>lua vim.lsp.buf.definition()<CR>',opts)
+    vim.api.nvim_buf_set_keymap(0,'n','gt','<cmd>lua vim.lsp.buf.type_definition()<CR>',opts)
+    vim.api.nvim_buf_set_keymap(0,'n','ga','<cmd>lua vim.lsp.buf.code_action()<CR>',opts)
+    vim.api.nvim_buf_set_keymap(0,'n','gr','<cmd>lua vim.lsp.buf.references()<CR>',opts)
+    vim.api.nvim_buf_set_keymap(0,'n','gl', '<cmd>lua vim.diagnostic.open_float()<CR>',opts)
+    vim.api.nvim_buf_set_keymap(0,'n','rn','<cmd>lua vim.lsp.buf.rename()<CR>',opts)
+    vim.api.nvim_buf_set_keymap(0,'n','ff', '<cmd>lua vim.lsp.buf.formatting()<CR>',opts)
+end
+
+local server_opts = {
+    ["jsonls"] = function(opts)
+        opts.settings = {
+            json = {
+                schemas = require("schemastore").json.schemas()
+            }
+        }
+    end,
+    ["sumneko_lua"] = function(opts)
+        opts.settings = {
+            Lua = {
+                diagnostics = {
+                    globals = { 'vim' }
+                }
+            }
+        }
+    end,
+}
+
+-- Lsp Installer
+
+local lsp_installer = require("nvim-lsp-installer")
+
+-- Install language servers
 for _, server_name in ipairs(servers) do
     local ok, server = lsp_installer.get_server(server_name)
     if ok and not server:is_installed() then
@@ -147,62 +158,15 @@ for _, server_name in ipairs(servers) do
     end
 end
 
+-- Setup lsp servers
 lsp_installer.on_server_ready(function(server)
-    local opts = {}
+    local opts = {
+        on_attach = on_attach
+    }
 
-    if server.name == "jsonls" then
-        opts = {
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = {
-                json = {
-                    schemas = require("schemastore").json.schemas()
-                }
-            }
-        }
+    if server_opts[server.name] then
+        server_opts[server.name](opts)
     end
-
-    if server.name == "sumneko_lua" then
-        opts = {
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = {
-                Lua = {
-                    diagnostics = {
-                        globals = { 'vim' }
-                    }
-                }
-            }
-        }
-    end
-
-    if server == "tsserver" then
-        opts = {
-            capabilities = capabilities,
-            on_attach = function(client)
-                client.resolved_capabilities.document_formatting = false
-                client.resolved_capabilities.document_range_formatting = false
-
-                local ts_utils = require("nvim-lsp-ts-utils")
-                ts_utils.setup({})
-                ts_utils.setup_client(client)
-
-                on_attach(client)
-            end,
-        }
-    end
-
-    -- if server == "yamlls" then
-    --     opts = {
-    --         capabilities = capabilities,
-    --         on_attach = on_attach,
-    --         settings = {
-    --             yaml = {
-    --                 schemas = require("schemastore").yaml.schemas()
-    --             }
-    --         }
-    --     }
-    -- end
 
     server:setup(opts)
 end)
@@ -229,12 +193,6 @@ local sources = {
 
 null_ls.setup({
     sources = sources,
-    on_attach = function(client)
-        -- TODO: auto format files on save with null-ls
-        -- if client.resolved_capabilities.document_formatting then
-        --     vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
-        -- end
-        on_attach(client)
-    end,
+    on_attach = on_attach,
     diagnostics_format = "[#{c}] #{m} (#{s})",
 })

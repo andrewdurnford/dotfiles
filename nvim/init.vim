@@ -11,6 +11,7 @@ Plug 'williamboman/nvim-lsp-installer'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'MunifTanjim/prettier.nvim'
 Plug 'b0o/schemastore.nvim'
 
@@ -35,7 +36,6 @@ Plug 'nvim-treesitter/playground'
 " Misc
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'lewis6991/foldsigns.nvim'
-Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
