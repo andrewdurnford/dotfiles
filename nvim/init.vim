@@ -82,19 +82,19 @@ nnoremap <silent> <expr> <Leader>n g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" :
 nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <C-f> <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <C-b> <cmd>lua require('telescope.builtin').git_branches()<cr>
-nnoremap <silent> <C-n> :silent !tmux neww tmux-sessionizer<CR>
+nnoremap <silent> <C-n> :silent !tmux neww tmux-sessionizer<cr>
 
 " -----------------------------------------------------------------------------
 " git
 " -----------------------------------------------------------------------------
 
-noremap <leader>gs :G<CR>
-noremap <leader>gpf :Git push -f<CR>
-noremap <leader>gph :Git push -u origin HEAD<CR>
-nmap <leader>gh :diffget //2<CR>
-nmap <leader>gl :diffget //3<CR>
-" TODO: git-commit-amend (persist date)
-" TODO: git-commit-date
+" TODO: merge conflicts
+" nmap <leader>gh :diffget //2<CR>
+" nmap <leader>gl :diffget //3<CR>
+
+nnoremap <silent> <Leader>gf :exec "Git push -f"<cr>
+nnoremap <silent> <Leader>gp :exec "Git push origin " . fugitive#head()<cr>
+map <ca> !GIT_COMMITTER_DATE="$(git log -n 1 --format=%aD)" git commit --amend --date="$(git log -n 1 --format=%aD)"<cr>
 
 " -----------------------------------------------------------------------------
 " Settings
