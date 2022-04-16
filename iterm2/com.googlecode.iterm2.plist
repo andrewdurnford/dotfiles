@@ -1257,8 +1257,14 @@
 	</dict>
 	<key>Default Bookmark Guid</key>
 	<string>2EC39CD8-4FB9-4AA7-BD9F-E92F1313DD65</string>
+	<key>DisableFullscreenTransparency</key>
+	<false/>
+	<key>EnableDivisionView</key>
+	<true/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
+	<key>HideScrollbar</key>
+	<true/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
 	<key>IRMemory</key>
@@ -2045,7 +2051,11 @@
 	<false/>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>5</integer>
+	<key>UseBorder</key>
+	<true/>
 	<key>VisualIndicatorForEsc</key>
+	<false/>
+	<key>WindowNumber</key>
 	<false/>
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
