@@ -1,9 +1,6 @@
 require('onedark').setup {
     style = 'dark',
     transparent = true,
-    code_style = {
-        comments = 'none',
-    },
     highlights = {
         TSField = {fg = '$fg'},
         TSFuncBuiltin = {fg = '$red'},
@@ -11,8 +8,8 @@ require('onedark').setup {
         TSOperator = {fg = '$cyan'},
         TSParameter = {fg = '$fg'},
         TSProperty = {fg = '$fg'},
-        TSPunctDelimiter = {fg = '$purple'},
         TSPunctBracket = {fg = '$light_grey'},
+        TSPunctDelimiter = {fg = '$purple'},
         TSPunctSpecial = {fg = '$red'},
         TSTag = {fg = '$yellow'},
         TSTagAttribute = {fg = '$orange'},
