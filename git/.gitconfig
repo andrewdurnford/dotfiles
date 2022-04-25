@@ -8,8 +8,20 @@
 [init]
 	defaultBranch = main
 
+[alias]
+	trim = "!git fetch && git branch --merged | egrep -v 'master|main|develop' | xargs git branch -d"
+
+[diff]
+	colorMoved = zebra
+
+[fetch]
+	prune = true
+
 [pull]
-	rebase = false
+	rebase = true
+
+[rebase]
+	autoStash = true
 
 [color]
 	ui = auto
