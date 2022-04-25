@@ -8,9 +8,15 @@ cmp.setup({
             require('luasnip').lsp_expand(args.body)
         end
     },
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+    },
     mapping = {
         ['<C-e>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
-        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+        ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
+        ['<C-Space>'] = cmp.mapping.complete(),
         ['<CR>'] = cmp.mapping.confirm({ select = false }),
     },
     sources = cmp.config.sources({
@@ -18,6 +24,7 @@ cmp.setup({
         { name = 'nvim_lua' },
         { name = "path" },
         { name = 'luasnip' },
+    }, {
         { name = 'buffer',
             option = {
                 get_bufnrs = function()
@@ -48,9 +55,6 @@ cmp.setup({
             })[entry.source.name] or 0
             return vim_item
         end
-    },
-    documentation = {
-  	    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
     },
     experimental = {
         ghost_text = true,
@@ -105,14 +109,20 @@ local on_attach = function(client)
         client.resolved_capabilities.document_formatting = false
         client.resolved_capabilities.document_range_formatting = false
 
-        -- format on save
-        vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync()")
-
         -- setup ts-utils
         local ts_utils = require("nvim-lsp-ts-utils")
-        ts_utils.setup()
+        ts_utils.setup {}
         ts_utils.setup_client(client)
     end
+
+    if client.name == 'jsonls' then
+        -- disable formatting
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+    end
+
+    -- format on save
+    vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync()")
 
     -- lsp remaps
     local opts = { noremap = true, silent = true }
@@ -158,10 +168,13 @@ for _, server_name in ipairs(servers) do
     end
 end
 
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 -- Setup lsp servers
 lsp_installer.on_server_ready(function(server)
     local opts = {
-        on_attach = on_attach
+        on_attach = on_attach,
+        capabilities = capabilities
     }
 
     if server_opts[server.name] then

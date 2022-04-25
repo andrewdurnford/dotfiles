@@ -2,6 +2,11 @@
 " Plugins
 " -----------------------------------------------------------------------------
 
+" Set filetype for jsonc files
+autocmd BufNewFile,BufRead package.json setlocal filetype=jsonc
+autocmd BufNewFile,BufRead jsconfig.json setlocal filetype=jsonc
+autocmd BufNewFile,BufRead tsconfig.json setlocal filetype=jsonc
+
 " VimPlug
 call plug#begin('~/.config/nvim/plugins')
 

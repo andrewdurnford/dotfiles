@@ -11,7 +11,7 @@ brew 'fzf'
 brew 'git'
 brew 'htop'
 brew 'mas'
-brew 'neovim'
+brew 'neovim', args: ['HEAD']
 brew 'nvm'
 brew 'tmux'
 brew 'tree'
