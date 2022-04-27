@@ -32,10 +32,6 @@ Keyboard > Keyboard
 - Touchbar Shows "Expanded Control Strip"
 - `remap` Modifier Keys "Caps Lock" to "Control"
 
-Keyboard > Shortcuts
-- Move left / right a space "^ + <-" / "^ + ->"
-- Switch to Desktop 1-0 "^ + 1-0"
-
 Trackpad > Point & Click
 - `disable` "Force Click and haptic feedback"
 

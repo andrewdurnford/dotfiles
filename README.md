@@ -31,6 +31,8 @@
 ├── zsh
 │   └── .zshrc
 ├── .gitignore
+├── .skhdrc
+├── .yabairc
 ├── Brewfile
 ├── LICENSE
 ├── README.md
@@ -89,3 +91,8 @@ cd dotfiles
 See [macOS README](./macos/README.md)
 
 8. Restart to finalise the process
+
+9. Install yabai / skhd
+    1. [Disable 'System Integrity Protection'](https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection)
+    2. [Set yabai to load on startup](https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#macos-big-sur-and-monterey---automatically-load-scripting-addition-on-startup)
+    3. Load yabai `sudo yabai --load-sa`

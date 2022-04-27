@@ -47,6 +47,10 @@ source $HOME/.zshrc
 ln -sf $DOTFILES/tmux/.tmux.conf $HOME/.tmux.conf
 tmux source $HOME/.tmux.conf
 
+# symlink yabai and skhd
+ln -sf $DOTFILES/.yabairc $HOME/.yabairc
+ln -sf $DOTFILES/.skhdrc $HOME/.skhdrc
+
 # install node via nvm
 nvm install --lts
 
