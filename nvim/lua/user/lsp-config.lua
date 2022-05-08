@@ -122,7 +122,7 @@ local on_attach = function(client)
     end
 
     -- format on save
-    vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync()")
+    -- vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)")
 
     -- lsp remaps
     local opts = { noremap = true, silent = true }
