@@ -17,9 +17,6 @@ brew 'tmux'
 brew 'tree'
 brew 'wget'
 brew 'zsh'
-brew 'zsh-autosuggestions'
-brew 'zsh-completions'
-brew 'zsh-syntax-highlighting'
 
 # Applications
 # TODO: https://github.com/ianyh/Amethyst/issues/979
