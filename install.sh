@@ -25,31 +25,13 @@ brew bundle
 
 DOTFILES=$HOME/code/andrewdurnford/dotfiles
 
+# TODO: move to ~/.local/bin and add to zsh path
 # symlink bin scripts
-for file in $DOTFILES/bin/*; do sudo ln -sf $file /usr/local/bin; done
+sudo stow -t / bin
 
-# symlink git config
-ln -sf $DOTFILES/git/.gitconfig $HOME/.gitconfig
-ln -sf $DOTFILES/git/.gitignore $HOME/.gitignore
-
-# symlink macos config
-ln -sf $DOTFILES/macos/.macos $HOME/.macos
-
-# symlink nvim config
-ln -sf $DOTFILES/nvim/init.vim $HOME/.config/nvim/init.vim
-ln -sf $DOTFILES/nvim/lua/user $HOME/config/nvim/lua/user
-
-# symlink zsh config
-ln -sf $DOTFILES/zsh/.zshrc $HOME/.zshrc
-source $HOME/.zshrc
-
-# symlink tmux config
-ln -sf $DOTFILES/tmux/.tmux.conf $HOME/.tmux.conf
-tmux source $HOME/.tmux.conf
-
-# symlink yabai and skhd
-ln -sf $DOTFILES/.yabairc $HOME/.yabairc
-ln -sf $DOTFILES/.skhdrc $HOME/.skhdrc
+# TODO: https://github.com/aspiers/stow/issues/75
+# symlink git, nvim, tmux, zsh, yabai, skhd
+stow -t ~ git nvim tmux zsh yabai skhd
 
 # install node via nvm
 nvm install --lts

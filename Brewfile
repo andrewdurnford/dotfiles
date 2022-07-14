@@ -14,6 +14,7 @@ brew 'htop'
 brew 'neovim', args: ['HEAD']
 brew 'nvm'
 brew 'skhd'
+brew 'stow'
 brew 'tmux'
 brew 'tree'
 brew 'wget'
