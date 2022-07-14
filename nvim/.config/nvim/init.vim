@@ -69,6 +69,9 @@ augroup filetype_jsx
     autocmd FileType javascript set filetype=javascriptreact
 augroup END
 
+" Resize splits when screen size changes automatically
+autocmd VimResized * wincmd =
+
 " -----------------------------------------------------------------------------
 " NERDTree
 " -----------------------------------------------------------------------------
