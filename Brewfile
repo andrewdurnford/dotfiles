@@ -10,6 +10,7 @@ brew 'ffmpeg'
 brew 'fzf'
 brew 'git'
 brew 'htop'
+brew 'mas'
 brew 'neovim', args: ['HEAD']
 brew 'nvm'
 brew 'rg'
@@ -28,9 +29,14 @@ cask 'font-fira-code'
 cask 'iterm2'
 cask 'logitech-options'
 cask 'messenger'
+cask 'monitorcontrol'
+cask 'scroll-reverser'
 cask 'slack'
 cask 'spotify'
 cask 'visual-studio-code'
+
+# Mac App Store
+mas 'Ethernet Status', id: '1186187538'
 
 # Browsers
 cask 'firefox'
