@@ -12,6 +12,7 @@ brew 'git'
 brew 'htop'
 brew 'neovim', args: ['HEAD']
 brew 'nvm'
+brew 'rg'
 brew 'stow'
 brew 'tmux'
 brew 'tree'
