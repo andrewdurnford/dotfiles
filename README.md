@@ -51,7 +51,7 @@ softwareupdate --install-rosetta --agree-to-license
 3. Install xcode
 
 ```bash
-xcode-select install
+xcode-select --install
 ```
 
 4. [Generate new SSH key](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
