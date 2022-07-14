@@ -1,7 +1,6 @@
 # Taps
 tap 'homebrew/cask'
 tap 'homebrew/cask-fonts'
-tap 'koekeishiya/formulae'
 
 # Binaries
 brew 'bat'
@@ -13,18 +12,18 @@ brew 'git'
 brew 'htop'
 brew 'neovim', args: ['HEAD']
 brew 'nvm'
-brew 'skhd'
 brew 'stow'
 brew 'tmux'
 brew 'tree'
 brew 'wget'
-brew 'yabai'
 brew 'zsh'
 brew 'zsh-autosuggestions'
 brew 'zsh-completions'
 brew 'zsh-syntax-highlighting'
 
 # Applications
+# TODO: https://github.com/ianyh/Amethyst/issues/979
+cask 'amethyst'
 cask 'bitwarden'
 cask 'docker'
 cask 'font-fira-code'

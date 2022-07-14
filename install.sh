@@ -30,8 +30,8 @@ DOTFILES=$HOME/code/andrewdurnford/dotfiles
 sudo stow -t / bin
 
 # TODO: https://github.com/aspiers/stow/issues/75
-# symlink git, nvim, tmux, zsh, yabai, skhd
-stow -t ~ git nvim tmux zsh yabai skhd
+# symlink git, nvim, tmux, zsh
+stow -t ~ git nvim tmux zsh
 
 # install node via nvm
 nvm install --lts
