@@ -21,12 +21,13 @@ brew 'wget'
 brew 'zsh'
 
 # Applications
+# TODO: https://github.com/alacritty/alacritty/issues/4673
+cask 'alacryitty'
 # TODO: https://github.com/ianyh/Amethyst/issues/979
 cask 'amethyst'
 cask 'bitwarden'
 cask 'docker'
 cask 'font-fira-code'
-cask 'iterm2'
 cask 'logitech-options'
 cask 'messenger'
 cask 'monitorcontrol'

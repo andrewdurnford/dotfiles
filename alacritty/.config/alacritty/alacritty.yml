@@ -1,0 +1,22 @@
+env:
+  TERM: xterm-256color
+
+window:
+  decorations: none
+  # padding:
+    # x: 6
+    # y: 6
+font:
+  size: 14.0
+  normal:
+    family: Fira Code
+  offset:
+    y: 10
+  glyph_offset:
+    y: 5
+colors:
+  cursor:
+    text: '#1e1f21'
+    cursor: '#abb2bf'
+  primary:
+    foreground: '#ffffff'

@@ -2,6 +2,10 @@
 
 ```
 .
+├── alacritty
+│   └── .config
+│       └── alacritty
+│           └── alacritty.yml
 ├── bin
 │   └── usr
 │       └── local
@@ -12,8 +16,6 @@
 ├── git
 │   ├── .gitconfig
 │   └── .gitignore
-├── iterm2
-│   └── com.googlecode.iterm2.plist
 ├── macos
 │   ├── .macos
 │   └── README.md
@@ -104,8 +106,8 @@ brew bundle
 sudo stow -t / bin
 
 # TODO: https://github.com/aspiers/stow/issues/75
-# symlink git, nvim, tmux, zsh
-stow -t ~ git nvim tmux zsh
+# symlink alacritty, git, nvim, tmux, zsh
+stow -t ~ alacritty git nvim tmux zsh
 ```
 
 8. Setup neovim
