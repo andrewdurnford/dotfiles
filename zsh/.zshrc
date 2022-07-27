@@ -3,10 +3,10 @@
 function parse_git_branch() {
     git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/[\1]/p'
 }
-COLOR_DEF=$'\e[0m'
-COLOR_USR=$'\e[3;5;243m'
-COLOR_DIR=$'\e[38;5;197m'
-COLOR_GIT=$'\e[38;5;39m'
+# COLOR_DEF=$'\e[0m'
+# COLOR_USR=$'\e[3;5;243m'
+# COLOR_DIR=$'\e[38;5;197m'
+# COLOR_GIT=$'\e[38;5;39m'
 setopt PROMPT_SUBST
 export PROMPT='${COLOR_USR}%n ${COLOR_DIR}%~ ${COLOR_GIT}$(parse_git_branch)${COLOR_DEF} $ '
 
@@ -43,28 +43,11 @@ alias vim="nvim"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-# https://github.com/nvm-sh/nvm#zsh
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
+nvm() {
+  unset -f nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm
+  nvm $@
 }
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
 
 # tmux
 tmux-sessionizer-widget() { 
@@ -77,3 +60,43 @@ bindkey ^n tmux-sessionizer-widget
 
 # remove duplicates from $PATH
 typeset -aU path
+
+# auto lazy-load nvm
+#
+# https://blog.yo1.dog/better-nvm-lazy-loading
+#
+# Does not work with internal aliases `node`, `stable`, `unstable`, `iojs`
+# TODO: add a fallback to call nvm when these are encountered
+autoload -U add-zsh-hook
+lazy-load-nvmrc() {
+  # TODO: fix broken syntax highlighting caused by `2>/dev/null` inside var
+  # Get the nvm version in order of local .nvmrc, global .nvmrc, global default
+  NODE_VER="$((cat .nvmrc || cat ~/.nvmrc || cat "$NVM_DIR/alias/default") 2>/dev/null )"
+
+  if [ -s .nvmrc ]; then
+    echo "Found '$(pwd)/.nvmrc' with version <$NODE_VER>"
+  fi
+  
+  # Recursively resolve the aliases
+  while [ -s "$NVM_DIR/alias/$NODE_VER" ] && [ ! -z "$NODE_VER" ]; do
+    NODE_VER="$(cat "$NVM_DIR/alias/$NODE_VER")"
+  done
+
+  # Resolve the path 
+  NODE_VER_PATH="$(find $NVM_DIR/versions/node -maxdepth 1 -name "v${NODE_VER#v}*" | sort -rV | head -n 1)"
+
+  # Add the node version to path
+  if [ ! -z "$NODE_VER_PATH" ]; then
+    export PATH="$NODE_VER_PATH/bin:$PATH"
+
+    if [ -s .nvmrc ]; then
+      echo "Now using node $(node -v) (npm v$(npm -v))"
+    fi
+  fi
+
+  # remove duplicates from $PATH
+  typeset -aU path
+}
+
+add-zsh-hook chpwd lazy-load-nvmrc
+lazy-load-nvmrc
