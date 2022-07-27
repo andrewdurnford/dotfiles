@@ -21,8 +21,7 @@ brew 'wget'
 brew 'zsh'
 
 # Applications
-# TODO: https://github.com/alacritty/alacritty/issues/4673
-cask 'alacryitty'
+cask 'alacryitty', args: ['HEAD', 'no-quarantine']
 # TODO: https://github.com/ianyh/Amethyst/issues/979
 cask 'amethyst'
 cask 'bitwarden'
