@@ -159,6 +159,9 @@ set updatetime=50
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
+" Use system clipboard
+set clipboard=unnamed
+
 lua require("user.autopairs")
 lua require("user.colorizer")
 lua require("user.gitsigns")
