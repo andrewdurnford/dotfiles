@@ -1,6 +1,6 @@
 -- Completions
 
-local cmp = require'cmp'
+local cmp = require 'cmp'
 
 cmp.setup({
     snippet = {
@@ -127,15 +127,15 @@ local on_attach = function(client)
 
     -- lsp remaps
     local opts = { noremap = true, silent = true }
-    vim.api.nvim_buf_set_keymap(0,'n','K','<cmd>lua vim.lsp.buf.hover()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','gs','<cmd>lua vim.lsp.buf.signature_help()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','gd','<cmd>lua vim.lsp.buf.definition()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','gt','<cmd>lua vim.lsp.buf.type_definition()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','ga','<cmd>lua vim.lsp.buf.code_action()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','gr','<cmd>lua vim.lsp.buf.references()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','gl', '<cmd>lua vim.diagnostic.open_float()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','rn','<cmd>lua vim.lsp.buf.rename()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','ff', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>',opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', 'gl', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', 'rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(0, 'n', 'ff', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', opts)
 end
 
 local server_opts = {
@@ -209,4 +209,8 @@ null_ls.setup({
     sources = sources,
     on_attach = on_attach,
     diagnostics_format = "[#{c}] #{m} (#{s})",
+})
+
+require('lspconfig').cssls.setup({
+    filetypes = { "css", "scss", "less", "html", "javascriptreact", "typescriptreact" }
 })
