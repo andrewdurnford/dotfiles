@@ -10,22 +10,47 @@ shell:
 
 window:
   decorations: none
-  # padding:
-    # x: 6
-    # y: 6
+  dynamic_padding: true
 
 font:
-  size: 14.0
+  size: 16.0
   normal:
     family: Fira Code
-  offset:
-    y: 10
-  glyph_offset:
-    y: 5
-
+    
+# TODO: cursor.text should be background color
+# TODO: change colors to hex
 colors:
   cursor:
-    text: '#1e1f21'
-    cursor: '#abb2bf'
+    text: '#1b1b26'
+    cursor: '#a9b1d6'
+
+  # Default colors
   primary:
-    foreground: '#ffffff'
+    background: '0x1a1b26'
+    foreground: '0xc0caf5'
+
+  # Normal colors
+  normal:
+    black:   '0x15161E'
+    red:     '0xf7768e'
+    green:   '0x9ece6a'
+    yellow:  '0xe0af68'
+    blue:    '0x7aa2f7'
+    magenta: '0xbb9af7'
+    cyan:    '0x7dcfff'
+    white:   '0xa9b1d6'
+
+  # Bright colors
+  bright:
+    black:   '0x414868'
+    red:     '0xf7768e'
+    green:   '0x9ece6a'
+    yellow:  '0xe0af68'
+    blue:    '0x7aa2f7'
+    magenta: '0xbb9af7'
+    cyan:    '0x7dcfff'
+    white:   '0xc0caf5'
+
+  indexed_colors:
+    - { index: 16, color: '0xff9e64' }
+    - { index: 17, color: '0xdb4b4b' }

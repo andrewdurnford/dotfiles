@@ -33,7 +33,7 @@ Plug 'RRethy/nvim-treesitter-endwise'
 Plug 'L3MON4D3/LuaSnip'
 
 " Highlighting
-Plug 'navarasu/onedark.nvim'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
@@ -59,9 +59,6 @@ call plug#end()
 syntax on
 set t_Co=256
 set termguicolors
-set background=dark
-
-colorscheme onedark
 
 " Set .js files as javascriptreact
 augroup filetype_jsx
@@ -123,6 +120,8 @@ set expandtab
 set tabstop=4 softtabstop=4
 set shiftwidth=4
 
+set shortmess+=F
+
 set nofoldenable
 set foldnestmax=1
 
@@ -150,7 +149,7 @@ set isfname+=@-@
 set splitbelow splitright
 
 " Give more space for displaying messages
-set cmdheight=1
+set cmdheight=2
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -164,9 +163,9 @@ set clipboard=unnamed
 
 lua require("user.autopairs")
 lua require("user.colorizer")
+lua require("user.colorscheme")
 lua require("user.gitsigns")
 lua require("user.lsp-config")
 lua require("user.lualine")
-lua require("user.onedark")
 lua require("user.telescope")
 lua require("user.treesitter")

@@ -1,15 +1,20 @@
+local tokyonight = require("lualine.themes.tokyonight")
+
+tokyonight.normal.c.bg = '#292e42'
+-- tokyonight.inactive.c.bg = '#292e42'
+
 require('lualine').setup {
     options = {
-        theme = 'onedark',
+        theme = tokyonight,
         section_separators= { left = '', right = ''},
         component_separators = { left = '', right = ''},
     },
     sections = {
         lualine_a = {},
-        lualine_b = {'branch'},
+        lualine_b = {},
         lualine_c = {{'filename', path = 1}},
-        lualine_x = {'filetype', 'encoding'},
-        lualine_y = {'location'},
-        lualine_z = {}
+        lualine_x = {'filetype', 'encoding', 'progress', 'location'},
+        lualine_y = {},
+        lualine_z = {},
     }
 }
