@@ -1,6 +1,6 @@
 require('telescope').setup {
   defaults = {
-    file_ignore_patterns = {".git/*", "node_modules"},
+    file_ignore_patterns = {".git/", "node_modules"},
     previewer = true,
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
     grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
