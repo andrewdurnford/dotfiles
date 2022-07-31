@@ -92,7 +92,7 @@ cmp.setup.cmdline(':', {
 local servers = {
     "cssls",
     "dockerls",
-    -- "gopls",
+    "gopls",
     "graphql",
     "html",
     "jsonls",

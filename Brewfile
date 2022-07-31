@@ -9,6 +9,7 @@ brew 'curl'
 brew 'ffmpeg'
 brew 'fzf'
 brew 'git'
+brew 'go'
 brew 'htop'
 brew 'mas'
 brew 'neovim', args: ['HEAD']
