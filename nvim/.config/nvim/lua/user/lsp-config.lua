@@ -106,23 +106,24 @@ local servers = {
 local on_attach = function(client)
     if client.name == 'tsserver' then
         -- disable formatting
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
+        local callback = function()
+            vim.lsp.buf.format({
+                nil,
+                -- bufnr = bufnr,
+                filter = function()
+                    return client.name == "null-ls"
+                end
+            })
+        end
 
         -- setup ts-utils
         local ts_utils = require("nvim-lsp-ts-utils")
         ts_utils.setup {}
         ts_utils.setup_client(client)
-    end
 
-    if client.name == 'jsonls' then
-        -- disable formatting
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
+        -- format on save
+        vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.format({ timeout_ms = 4000 })")
     end
-
-    -- format on save
-    -- vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)")
 
     -- lsp remaps
     local opts = { noremap = true, silent = true }
@@ -134,7 +135,7 @@ local on_attach = function(client)
     vim.api.nvim_buf_set_keymap(0,'n','gr','<cmd>lua vim.lsp.buf.references()<CR>',opts)
     vim.api.nvim_buf_set_keymap(0,'n','gl', '<cmd>lua vim.diagnostic.open_float()<CR>',opts)
     vim.api.nvim_buf_set_keymap(0,'n','rn','<cmd>lua vim.lsp.buf.rename()<CR>',opts)
-    vim.api.nvim_buf_set_keymap(0,'n','ff', '<cmd>lua vim.lsp.buf.formatting()<CR>',opts)
+    vim.api.nvim_buf_set_keymap(0,'n','ff', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>',opts)
 end
 
 local server_opts = {
